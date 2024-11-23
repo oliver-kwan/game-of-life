@@ -56,6 +56,9 @@ class Matrix:
     def is_tile_selected(self, point: Point):
         return None if self.get_tile(point) == None else self.get_tile(point).is_selected
 
+    def clear(self):
+        self.matrix = [[Tile(False, Point(x, y)) for x in range(self.size)] for y in range(self.size)]
+
 
     
 
@@ -83,7 +86,7 @@ class InputRegister:
         if key not in self.has_been_pressed:
             self.has_been_pressed[key] = False
         
-        if pressed_keys[pygame.K_w]:
+        if pressed_keys[key]:
             if not detect_repeat and self.has_been_pressed[key]:
                 #Don't detect repeats
                 pass
@@ -196,6 +199,7 @@ while running:
         tile_pressed.toggle_state()
     
     input_register.detect_keypress(pygame.K_w, simulation.iterate)
+    input_register.detect_keypress(pygame.K_c, matrix.clear)
     simulation.assign_cell_neighbor_amount()
 
 
